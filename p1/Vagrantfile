@@ -75,4 +75,8 @@ Vagrant.configure("2") do |config|
   #   apt-get update
   #   apt-get install -y apache2
   # SHELL
+
+  # Run shell script when we provision a new machine
+  config.vm.provision "k3s shell script", type: "shell",
+    path: "k3s.sh"
 end
