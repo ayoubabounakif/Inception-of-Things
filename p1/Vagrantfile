@@ -12,8 +12,48 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
-  # Use centos/7 box with Vagrant
   config.vm.box = "centos/7"
+
+  # MASTER NODE
+  config.vm.define "k3s-master" do |k3s|
+    k3s.vm.hostname = "k3s-master"
+    k3s.vm.network "private_network", ip: "192.168.42.110"
+    k3s.vm.network "forwarded_port", guest: 6443, host: 6443, host_ip: "0.0.0.0"
+    k3s.vm.provider "virtualbox" do |vb|
+      vb.gui = true
+      vb.name = "my-sexy-homestead-box-master"
+      vb.memory = "1024"
+      vb.cpus = 2
+    end
+    k3s.vm.provision "shell", inline: <<-SHELL
+      curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--write-kubeconfig-mode 644" sh -
+      NODE_TOKEN="/var/lib/rancher/k3s/server/node-token"
+      while [ ! -e ${NODE_TOKEN} ]
+      do
+        echo "Waiting for node token..."
+      done
+    SHELL
+  end
+
+  # WORKER NODE
+  config.vm.define "k3s-worker" do |k3s|
+    k3s.vm.hostname = "k3s-worker"
+    k3s.vm.network "private_network", ip: "192.168.42.111"
+    k3s.vm.provider "virtualbox" do |vb|
+      vb.gui = true
+      vb.name = "my-sexy-homestead-box-worker"
+      vb.memory = "1024"
+      vb.cpus = 2
+    end
+    # k3s.vm.provision "shell", inline: <<-SHELL
+    #   NODE_TOKEN="/var/lib/rancher/k3s/server/node-token"
+    #   while [ ! -e ${NODE_TOKEN} ]
+    #   do
+    #     echo "Waiting for node token..."
+    #   done
+    #   curl -sfL https://get.k3s.io | K3S_TOKEN=${NODE_TOKEN} K3S_URL=https://192.168.42.110:6443 sh -
+    # SHELL
+  end
 
 
   # Disable automatic box update checking. If you disable this, then
@@ -34,7 +74,7 @@ Vagrant.configure("2") do |config|
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
-  config.vm.network "private_network", ip: "192.168.42.110"
+  # config.vm.network "private_network", ip: "192.168.42.110"
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
@@ -49,21 +89,13 @@ Vagrant.configure("2") do |config|
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
-  # Example for VirtualBox:
-  #
-  config.vm.provider "virtualbox" do |vb|
-    # Display the VirtualBox GUI when booting the machine
-    vb.gui = true
+  # config.vm.provider "virtualbox" do |vb|
+  #   vb.gui = true
+  #   vb.name = "my-sexy-homestead-box-S"
+  #   vb.memory = "1024"
+  #   vb.cpus = 2
+  # end
 
-    # Customize the name that appears in the VirtualBox GUI
-    vb.name = "my-sexy-homestead-box-S"
-
-    # Customize the amount of memory on the VM:
-    vb.memory = "1024"
-
-    # Customize the amount of CPUs on the VM:
-    vb.cpus = 2
-  end
   #
   # View the documentation for the provider you are using for more
   # information on available options.
@@ -72,11 +104,12 @@ Vagrant.configure("2") do |config|
   # Ansible, Chef, Docker, Puppet and Salt are also available. Please see the
   # documentation for more information about their specific syntax and use.
   # config.vm.provision "shell", inline: <<-SHELL
-  #   apt-get update
-  #   apt-get install -y apache2
+    # apt-get update
+    # apt-get install -y apache2
+  #   curl -sfL https://get.k3s.io |  sh -
   # SHELL
 
   # Run shell script when we provision a new machine
-  config.vm.provision "k3s shell script", type: "shell",
-    path: "k3s.sh"
+  # config.vm.provision "k3s shell script", type: "shell",
+  #   path: "k3s.sh"
 end

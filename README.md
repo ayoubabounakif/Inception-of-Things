@@ -6,6 +6,10 @@ This project aims to introduce you to kubernetes from a developer perspective.Yo
   - vagrant global-status
   - vagrant destroy [options] [name|id]
   - vagrant ssh [options] [name|id] [-- extra ssh args]
-  - ip address show | grep eth1 | grep inet | awk '{print $2}' -- (private network)
+  - ip address show | grep eth1 | grep inet | awk '{print $2}' -- (Private network)
   - https://rancher.com/docs/k3s/latest/en/installation/install-options/ (k3s installation)
-  - https://rancher.com/docs/k3s/latest/en/advanced/#additional-preparation-for-red-hat-centos-enterprise-linux -- (additional prep for red hat centos)
+  - https://rancher.com/docs/k3s/latest/en/advanced/#additional-preparation-for-red-hat-centos-enterprise-linux -- (Additional prep for red hat centos)
+  - ls -lah $(which kubectl) -- (Check symlink to the k3s executable)
+  - kubectl get pods -o wide -- (List all pods in ps output format with more information (such as node name))
+  - kubectl get services
+  - ps aux | grep "k3s server"
