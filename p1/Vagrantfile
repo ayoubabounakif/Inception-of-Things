@@ -18,7 +18,6 @@ Vagrant.configure("2") do |config|
   config.vm.define "k3s-master" do |k3s|
     k3s.vm.hostname = "k3s-master"
     k3s.vm.network "private_network", ip: "192.168.42.110"
-    k3s.vm.network "forwarded_port", guest: 6443, host: 6443, host_ip: "0.0.0.0"
     k3s.vm.provider "virtualbox" do |vb|
       vb.gui = true
       vb.name = "my-sexy-homestead-box-master"
@@ -26,12 +25,7 @@ Vagrant.configure("2") do |config|
       vb.cpus = 2
     end
     k3s.vm.provision "shell", inline: <<-SHELL
-      curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--write-kubeconfig-mode 644" sh -
-      NODE_TOKEN="/var/lib/rancher/k3s/server/node-token"
-      while [ ! -e ${NODE_TOKEN} ]
-      do
-        echo "Waiting for node token..."
-      done
+      curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--write-kubeconfig-mode 644" --flannel-iface=eth1 sh -
     SHELL
   end
 

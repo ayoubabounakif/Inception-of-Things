@@ -10,6 +10,7 @@ This project aims to introduce you to kubernetes from a developer perspective.Yo
   - https://rancher.com/docs/k3s/latest/en/installation/install-options/ (k3s installation)
   - https://rancher.com/docs/k3s/latest/en/advanced/#additional-preparation-for-red-hat-centos-enterprise-linux -- (Additional prep for red hat centos)
   - ls -lah $(which kubectl) -- (Check symlink to the k3s executable)
-  - kubectl get pods -o wide -- (List all pods in ps output format with more information (such as node name))
+  - k3s kubectl get nodes
   - kubectl get services
   - ps aux | grep "k3s server"
+  - sudo firewall-cmd --state (Check firewall state)
