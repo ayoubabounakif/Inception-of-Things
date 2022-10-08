@@ -16,7 +16,7 @@ Vagrant.configure("2") do |config|
 
   # Disabling the vm synced folder in case you want a faster boot, and have
   # no apparent us
-  config.vm.synced_folder '.', '/vagrant', disabled: true
+  # config.vm.synced_folder '.', '/vagrant', disabled: true
 
   # MASTER NODE
   config.vm.define "k3s-master" do |k3s|
@@ -50,7 +50,9 @@ Vagrant.configure("2") do |config|
       sed -i 's/ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/g' /etc/ssh/sshd_config
       systemctl restart sshd.service
       sudo yum install sshpass -y
+      echo "Copying NODE_TOKEN ⏳ "
       sshpass -p "vagrant" ssh -o StrictHostKeyChecking=no vagrant@192.168.42.110 sudo cat /var/lib/rancher/k3s/server/node-token > /vagrant/node-token
+      echo "Copy DONE ✅ "
       NODE_TOKEN="/vagrant/node-token"
       curl -sfL https://get.k3s.io | K3S_TOKEN=${NODE_TOKEN} K3S_URL=https://192.168.42.110:6443 sh -
     SHELL
