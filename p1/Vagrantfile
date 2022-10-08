@@ -18,12 +18,6 @@ Vagrant.configure("2") do |config|
   # no apparent us
   config.vm.synced_folder '.', '/vagrant', disabled: true
 
-
-  config.trigger.before :up do |t|
-    t.info = "Bringing up your Vagrant guest machine!"
-  end
-  
-
   # MASTER NODE
   config.vm.define "k3s-master" do |k3s|
     k3s.vm.hostname = "k3s-master"
@@ -61,11 +55,6 @@ Vagrant.configure("2") do |config|
       curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--write-kubeconfig-mode 644" K3S_TOKEN=${NODE_TOKEN} K3S_URL=https://192.168.42.110:6443 sh -
     SHELL
   end
-
-  config.trigger.after :up do |trigger|
-    trigger.info = "Machine is up!"
-  end
-
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
