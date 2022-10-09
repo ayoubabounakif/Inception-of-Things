@@ -3,21 +3,12 @@
 
 Vagrant.configure("2") do |config|
 
-  # $common = <<-SHELL
-  #   sudo yum -y install vim tree net-tools telnet git python3 sshpass
-  #   sudo echo "autocmd filetype yaml setlocal ai ts=2 sw=2 et" > /home/vagrant/.vimrc
-  #   sudo echo "alias python=/usr/bin/python3" >> /home/vagrant/.bashrc
-  #   sed -i 's/ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/g' /etc/ssh/sshd_config
-  #   sudo systemctl restart sshd.service
-  #   rpm -i https://rpm.rancher.io/k3s-selinux-0.1.1-rc1.el7.noarch.rpm
-  # SHELL
-
   config.vm.box = "centos/7"
   config.vm.box_url = "centos/7"
 
   config.vm.box_check_update = false
 
-  # config.vm.synced_folder '.', '/vagrant', disabled: true
+  config.vm.synced_folder '.', '/vagrant', disabled: true
 
   # MASTER NODE
   config.vm.define "k3s-master" do |k3s|
@@ -30,13 +21,11 @@ Vagrant.configure("2") do |config|
       vb.customize ["modifyvm", :id, "--memory", 2048]
       vb.customize ["modifyvm", :id, "--name", "my-sexy-homestead-box-master"]
     end
-    # k3s.vm.provision "shell", inline: $script
     k3s.vm.provision "shell", inline: <<-SHELL
-      sudo yum -y install vim tree net-tools telnet git python3 sshpass
-      sudo echo "autocmd filetype yaml setlocal ai ts=2 sw=2 et" > /home/vagrant/.vimrc
-      sudo echo "alias python=/usr/bin/python3" >> /home/vagrant/.bashrc
+      sudo -u root sh -
+      yum -y install vim net-tools telnet msshpass
       sed -i 's/ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/g' /etc/ssh/sshd_config
-      sudo systemctl restart sshd.service
+      systemctl restart sshd.service
       rpm -i https://rpm.rancher.io/k3s-selinux-0.1.1-rc1.el7.noarch.rpm
       curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--write-kubeconfig-mode 644" sh -
     SHELL
@@ -53,19 +42,18 @@ Vagrant.configure("2") do |config|
       vb.customize ["modifyvm", :id, "--memory", 2048]
       vb.customize ["modifyvm", :id, "--name", "my-sexy-homestead-box-worker"]
     end
-    # k3s.vm.provision "shell", inline: $script
     k3s.vm.provision "shell", inline: <<-SHELL
-      sudo yum -y install vim tree net-tools telnet git python3 sshpass
-      sudo echo "autocmd filetype yaml setlocal ai ts=2 sw=2 et" > /home/vagrant/.vimrc
-      sudo echo "alias python=/usr/bin/python3" >> /home/vagrant/.bashrc
+      sudo -u root sh -
+      yum -y install vim net-tools telnet sshpass
       sed -i 's/ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/g' /etc/ssh/sshd_config
-      sudo systemctl restart sshd.service
+      systemctl restart sshd.service
       rpm -i https://rpm.rancher.io/k3s-selinux-0.1.1-rc1.el7.noarch.rpm
-      echo "Copying NODE_TOKEN ⏳ "
-      # sshpass -p "vagrant" ssh -o StrictHostKeyChecking=no vagrant@192.168.42.110 sudo cat /var/lib/rancher/k3s/server/node-token > ./node-token
-      echo "Copy DONE ✅ "
-      # NODE_TOKEN="./node-token"
-      # curl -sfL https://get.k3s.io | K3S_TOKEN=$NODE_TOKEN K3S_URL=https://192.168.42.110:6443 sh -
+      echo "Copying NODE_TOKEN ⏳"
+      sshpass -p "vagrant" ssh -o StrictHostKeyChecking=no vagrant@192.168.42.110 sudo cat /var/lib/rancher/k3s/server/node-token > ./node-token
+      echo "Copy DONE ✅"
+      NODE_TOKEN="$(cat node-token)"
+      systemctl daemon-reload
+      curl -sfL https://get.k3s.io | K3S_TOKEN=$(echo $NODE_TOKEN) K3S_URL=https://192.168.42.110:6443 sh -
     SHELL
   end
 

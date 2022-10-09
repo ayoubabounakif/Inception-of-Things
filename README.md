@@ -12,8 +12,16 @@ This project aims to introduce you to kubernetes from a developer perspective.Yo
   - k3s kubectl get nodes
   - kubectl get nodes -o wide
   - kubectl get services
+  - kubectl get pods --all-namespaces
   - ps aux | grep "k3s server"
   - ls -lah $(which kubectl) -- (Check symlink to the k3s executable)
+
+  - sudo vim /etc/systemd/system/k3s-agent.service
+  - ExecStart=/usr/local/bin/k3s \
+  agent \
+  --flanel-iface 'eth1'
+  - sudo systemctl daemon-reload
+  - sudo systemctl restart k3s-agent
 
   - https://rancher.com/docs/k3s/latest/en/installation/install-options/ (k3s installation)
   - https://rancher.com/docs/k3s/latest/en/advanced/#additional-preparation-for-red-hat-centos-enterprise-linux -- (Additional prep for red hat centos)
