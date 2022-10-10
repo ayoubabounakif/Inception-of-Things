@@ -19,4 +19,6 @@ This project aims to introduce you to kubernetes from a developer perspective.Yo
 - sudo firewall-cmd --state (Check firewall state)
 
 ## P2
+- kubectl get all
+- kubectl get all -n kube-system
 
