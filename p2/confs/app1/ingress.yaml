@@ -1,19 +1,21 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: app-one-ingress
+  name: hello-ingress
   labels:
-    name: app-one-ingress
+    name: hello-ingress
   annotations:
     kubernetes.io/ingress.class: "traefik"
     traefik.frontend.rule.type: PathPrefixStrip
 spec:
   rules:
-  - host: host
-  - http:
+  - host: app1
+    http:
       paths:
-      - path: /app-one
-        pathType: Prefix
+      - pathType: Prefix
+        path: "/app1"
         backend:
-          serviceName: app-one
-          servicePort: 80
+          service:
+            name: hello-one
+            port:
+              number: 80

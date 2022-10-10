@@ -13,14 +13,17 @@ spec:
         app: app-two
     spec:
       containers:
-        - name: nginx
-          image: nginx
-          resources:
-            limits:
-              memory: 512Mi
-              cpu: "1"
-            requests:
-              memory: 256Mi
-              cpu: "0.2"
-          ports:
-          - containerPort: 8080
+      - name: hello-kubernetes
+        image: paulbouwer/hello-kubernetes:1.7
+        ports:
+        - containerPort: 8080
+        env:
+        - name: MESSAGE
+          value: DOS !!
+        resources:
+          limits:
+            memory: 512Mi
+            cpu: "1"
+          requests:
+            memory: 256Mi
+            cpu: "0.2"
