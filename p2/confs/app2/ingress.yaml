@@ -9,13 +9,13 @@ metadata:
     traefik.frontend.rule.type: PathPrefixStrip
 spec:
   rules:
-  - host: app2
+  - host: app2.com
     http:
       paths:
       - pathType: Prefix
-        path: "/app2"
+        path: "/"
         backend:
           service:
-            name: hello-two
+            name: app-two
             port:
               number: 80
