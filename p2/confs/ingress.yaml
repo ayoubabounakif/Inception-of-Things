@@ -6,9 +6,17 @@ metadata:
     name: hello-ingress
   annotations:
     kubernetes.io/ingress.class: "traefik"
-    traefik.frontend.rule.type: PathPrefixStrip
 spec:
   rules:
+  - http:
+    paths:
+      - pathType: Prefix
+	path: "/"
+	backend:
+	  service:
+	    name: app-three
+	    port:
+	      number: 80
   - host: app1.com
     http:
       paths:

@@ -17,9 +17,6 @@ spec:
         image: paulbouwer/hello-kubernetes:1.7
         ports:
         - containerPort: 8080
-        env:
-        - name: MESSAGE
-          value: UNO !!
         resources:
           limits:
             memory: 512Mi
