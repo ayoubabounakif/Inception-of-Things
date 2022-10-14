@@ -21,8 +21,8 @@ This project aims to introduce you to kubernetes from a developer perspective.Yo
 ## P2
 - kubectl get all
 - kubectl get all -n kube-system
-- kubectl apply -f [filename] --validate=false
+- kubectl apply -f [filename] [--validate=false]
+- kubectl get ingress
 - curl -H "host:app${i}.com" 192.168.42.110
 - curl 192.168.42.110/${path}
-- kubectl get ingress
 
