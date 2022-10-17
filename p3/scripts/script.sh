@@ -22,7 +22,7 @@ echo "------ Installing current latest release of K3D ⏳ ------"
 curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
 echo "K3D Installed ✅"
 echo "------ Creating a cluster with just a single server node ⏳ ------"
-k3d cluster create mycluster
+/usr/local/bin/k3d cluster create mycluster
 echo "K3d cluster created ✅"
 
 
@@ -39,14 +39,14 @@ sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 ## If you do not have root access on the target system, you can still install kubectl to the ~/.local/bin directory:
 echo "------ Installing kubectl to the ~/.local/bin directory ⏳ ------"
 chmod +x kubectl
-mv ./kubectl /usr/local/bin/kubectl
+sudo mv ./kubectl /usr/local/bin/kubectl -f
 echo "Kubectl installed ✅"
 
 
 ### Install ArgoCD
 echo "------ Creating ArgoCD Namespace + Applying ArgoCD YAML ⏳ ------"
-kubectl create namespace argocd
+/usr/local/bin/kubectl create namespace argocd
 unset http_proxy
 unset https_proxy
-kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+/usr/local/bin/kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 echo "ArgoCD Installed ✅"
