@@ -27,4 +27,5 @@ This project aims to introduce you to kubernetes from a developer perspective.Yo
 - curl 192.168.42.110/${path}
 
 ## P3
+- kubectl get pod -n argocd
 
