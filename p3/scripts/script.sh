@@ -49,4 +49,5 @@ echo "------ Creating ArgoCD Namespace + Applying ArgoCD YAML ⏳ ------"
 unset http_proxy
 unset https_proxy
 /usr/local/bin/kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+/usr/local/bin/kubectl port-forward -n argocd svc/argocd-server 8080:443
 echo "ArgoCD Installed ✅"

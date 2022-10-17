@@ -27,5 +27,8 @@ This project aims to introduce you to kubernetes from a developer perspective.Yo
 - curl 192.168.42.110/${path}
 
 ## P3
+- kubectl cluster-info
 - kubectl get pod -n argocd
+- kubectl get svc -n argocd
+- kubectl port-forward -n argocd svc/argocd-server 8080:443
 
