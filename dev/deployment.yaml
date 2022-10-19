@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wils-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wils-app
+  template:
+    metadata:
+      labels:
+        app: wils-app
+    spec:
+      containers:
+      - name: wils-app
+        image: wil42/playground:v1
+        ports:
+        - containerPort: 8080
+        resources:
+          limits:
+            memory: 512Mi
+            cpu: "1"
+          requests:
+            memory: 256Mi
+            cpu: "0.2"
