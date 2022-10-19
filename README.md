@@ -1,7 +1,7 @@
 # Inception-of-Things
 This project aims to introduce you to kubernetes from a developer perspective.You will have to set up small clusters and discover the mechanics of continuous integration. At the end of this project you will be able to have a working cluster in docker and have a usable continuous integration for your applications.
 
-## P1 -- Important Commands
+## P1
 - vagrant up [options] [name|id]
 - vagrant reload [vm-name]
 - vagrant global-status [options] {e.g: --prune}
@@ -30,6 +30,5 @@ This project aims to introduce you to kubernetes from a developer perspective.Yo
 - kubectl cluster-info
 - kubectl get pod -n argocd
 - kubectl get svc -n argocd
-- kubectl port-forward -n argocd svc/argocd-server 8080:443
 - kubectl port-forward --address 0.0.0.0 svc/argocd-server -n argocd 8080:443
 - kubectl wait -n argocd --timeout=180s --for=condition=ready pod -l app.kubernetes.io/name=argocd-server
