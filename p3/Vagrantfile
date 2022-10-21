@@ -19,6 +19,7 @@ Vagrant.configure("2") do |config|
 	config.vm.synced_folder '.', '/vagrant', disabled: true
 
 	# config.vm.provision "file", source: "./scripts", destination: "./scripts"
+	# config.vm.provision "file", source: "./confs", destination: "./confs"
 
 	config.vm.define MASTER_BOX_NAME do |k3s|
 		k3s.vm.hostname = MASTER_BOX_NAME
