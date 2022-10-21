@@ -1,6 +1,6 @@
 ### Install Docker Engine on CentOS
 echo "------ Installing latest version of Docker Engine ⏳ ------"
-sudo yum install -y yum-utils
+sudo yum install -y yum-utils git vim
 sudo yum-config-manager \
     --add-repo \
     https://download.docker.com/linux/centos/docker-ce.repo
@@ -63,4 +63,6 @@ kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/st
 echo "ArgoCD Installed ✅"
 
 echo "===== Port Forwarding ====="
-# kubectl port-forward -n argocd svc/argocd-server 8080:443
+# sleep(120)
+
+# kubectl port-forward --address 0.0.0.0 svc/argocd-server -n argocd 8080:443
