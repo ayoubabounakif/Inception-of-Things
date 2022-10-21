@@ -5,11 +5,11 @@ sudo yum-config-manager \
     --add-repo \
     https://download.docker.com/linux/centos/docker-ce.repo
 sudo yum install docker-ce docker-ce-cli containerd.io docker-compose-plugin -y
-sudo systemctl enable docker.service
 echo "Docker installed ✅"
 
 ## Post-installation steps for Linux
 ## Managing docker as non-root user
+sudo systemctl enable docker.service
 echo "------ Add user to the docker group ⏳ ------"
 sudo usermod -aG docker $USER
 newgrp docker
@@ -62,7 +62,10 @@ kubectl create namespace argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 echo "ArgoCD Installed ✅"
 
-echo "===== Port Forwarding ====="
-# sleep(120)
+echo "------ Waiting for argocd-server to be ready ⏳ -------"
+kubectl wait -n argocd --timeout=180s --for=condition=ready pod -l app.kubernetes.io/name=argocd-server
 
-# kubectl port-forward --address 0.0.0.0 svc/argocd-server -n argocd 8080:443
+# kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
+
+echo "===== Port Forwarding ====="
+kubectl port-forward --address 0.0.0.0 svc/argocd-server -n argocd 8080:443
