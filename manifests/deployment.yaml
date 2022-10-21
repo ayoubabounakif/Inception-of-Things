@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app-three
+  name: wils-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: app-three
+      app: wils-app
   template:
     metadata:
       labels:
-        app: app-three
+        app: wils-app
     spec:
       containers:
-      - name: hello-kubernetes
-        image: paulbouwer/hello-kubernetes:1.7
+      - name: wils-app
+        image: wil42/playground:v2
         ports:
-        - containerPort: 8080
+        - containerPort: 8888
         resources:
           limits:
             memory: 512Mi
