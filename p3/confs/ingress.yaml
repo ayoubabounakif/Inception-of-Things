@@ -6,12 +6,11 @@ metadata:
     app: argocd
   annotations:
     ingress.kubernetes.io/ssl-redirect: "false"
-    kubernetes.io/ingress.class: "traefik"
 spec:
   rules:
   - http:
       paths:
-      - path: /argocd
+      - path: /
         pathType: Prefix
         backend:
           service:
