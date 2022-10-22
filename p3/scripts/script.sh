@@ -1,6 +1,6 @@
 ### Install Docker Engine on CentOS
 echo "------ Installing latest version of Docker Engine ⏳ ------"
-sudo yum install -y yum-utils git vim
+sudo yum install -y yum-utils git vim wget
 sudo yum-config-manager \
     --add-repo \
     https://download.docker.com/linux/centos/docker-ce.repo
@@ -50,7 +50,7 @@ echo "K3d Installed ✅"
 
 ### Creating a k3d cluster
 echo "------ Creating a cluster with just a single server node ⏳ ------"
-k3d cluster create mycluster --port 8080:80@loadbalancer --port 88888:888@loadbalancer --port 8443:443@loadbalancer
+k3d cluster create mycluster --port 8080:80@loadbalancer --port 8888:8888@loadbalancer --port 8443:443@loadbalancer
 k3d cluster create mycluster
 echo "K3d cluster created ✅"
 

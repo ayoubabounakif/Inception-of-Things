@@ -1,0 +1,15 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: development
+  labels:
+    app: development
+spec:
+  description: Dev ArgoCD Project to deploy our app locally
+  sourceRepos:
+  - "https://github.com/ayoubabounakif/*"
+  destinations:
+  - namespace: dev
+    server: https://kubernetes.default.svc
+  orphanedResources:
+    warn: false
