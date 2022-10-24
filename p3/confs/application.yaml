@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/ayoubabounakif/Inception-of-Things
-    targetRevision: confs
+    targetRevision: HEAD
     path: manifests
   destination:
     server: https://kubernetes.default.svc

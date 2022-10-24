@@ -6,7 +6,7 @@
 #   sh ./scripts/script.sh
 # SCRIPT
 
-MASTER_BOX_NAME = "floof" + "S"
+MASTER_BOX_NAME = "floofi" + "S"
 MASTER_BOX_IP = "192.168.42.110"
 VM_CPUS = 4
 VM_MEMORY = 2048

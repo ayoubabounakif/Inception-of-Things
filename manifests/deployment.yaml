@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: will-app
+  namespace: dev
+  labels:
+    app: will-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: will-app
+  template:
+    command:
+    - argocd-application-controller
+    - --status-processors
+    - "20"
+    - --operation-processors
+    - "10"
+    - --repo-server-timeout-seconds
+    - "180"
+    metadata:
+      labels:
+        app: will-app
+    spec:
+      containers:
+        - name: playground
+          image: "wil42/playground:v1"
+          ports:
+            - containerPort: 8888
