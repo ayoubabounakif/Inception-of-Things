@@ -73,5 +73,5 @@ kubectl wait -n argocd --timeout=180s --for=condition=ready pod -l app.kubernete
 # kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
 
 echo "===== Port Forwarding ====="
-# curl http://localhost:8888/
-# kubectl port-forward --address 0.0.0.0 svc/argocd-server -n argocd 8080:443
+# kubectl port-forward --address 0.0.0.0 svc/argocd-server -n argocd 8080:443 [ARGOCD]
+# kubectl port-forward --address 0.0.0.0 svc/will-app-service -n dev 8888 [APP]
