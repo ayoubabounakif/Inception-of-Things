@@ -33,3 +33,5 @@ This project aims to introduce you to kubernetes from a developer perspective.Yo
 - kubectl port-forward --address 0.0.0.0 svc/argocd-server -n argocd 8080:443
 - kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
 - kubectl wait -n argocd --timeout=180s --for=condition=ready pod -l app.kubernetes.io/name=argocd-server
+
+- sudo systemctl disable --now firewalld
