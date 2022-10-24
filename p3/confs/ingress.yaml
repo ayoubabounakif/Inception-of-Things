@@ -1,11 +1,12 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: argocd-ingress
+  name: ingress
+  namespace: dev
   labels:
-    app: argocd
+    app: ingress
   annotations:
-    ingress.kubernetes.io/ssl-redirect: "false"
+    kubernetes.io/ingress.class: "traefik"
 spec:
   rules:
   - host: will-app.com
@@ -18,13 +19,13 @@ spec:
             name: will-app-service
             port:
               number: 8888
-  - http:
-      paths:
-      - path: /argocd
-        pathType: Prefix
-        backend:
-          service:
-            name: argocd-server
-            port:
-              number: 8080
+  # - http:
+  #     paths:
+  #     - path: /argocd
+  #       pathType: Prefix
+  #       backend:
+  #         service:
+  #           name: argocd-server
+  #           port:
+  #             number: 8080
               
