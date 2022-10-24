@@ -20,10 +20,10 @@ spec:
           image: "wil42/playground:v2"
           ports:
             - containerPort: 8888
-          resources:
-          limits:
-            memory: 512Mi
-            cpu: "1"
-          requests:
-            memory: 256Mi
-            cpu: "0.2"
+#           resources:
+#           limits:
+#             memory: 512Mi
+#             cpu: "1"
+#           requests:
+#             memory: 256Mi
+#             cpu: "0.2"
