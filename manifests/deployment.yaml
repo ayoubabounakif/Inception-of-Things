@@ -11,6 +11,14 @@ spec:
     matchLabels:
       app: will-app
   template:
+    command:
+    - argocd-application-controller
+    - --status-processors
+    - "20"
+    - --operation-processors
+    - "10"
+    - --repo-server-timeout-seconds
+    - "180"
     metadata:
       labels:
         app: will-app
