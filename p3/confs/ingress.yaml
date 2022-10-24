@@ -8,12 +8,23 @@ metadata:
     ingress.kubernetes.io/ssl-redirect: "false"
 spec:
   rules:
+  - host: will-app.com
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: will-app-service
+            port:
+              number: 8888
   - http:
       paths:
-      - path: /
+      - path: /argocd
         pathType: Prefix
         backend:
           service:
             name: argocd-server
             port:
-              number: 80
+              number: 8080
+              
