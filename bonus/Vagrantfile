@@ -8,8 +8,8 @@
 
 MASTER_BOX_NAME = "floofi" + "S"
 MASTER_BOX_IP = "192.168.42.110"
-VM_CPUS = 4
-VM_MEMORY = 2048
+VM_CPUS = 2
+VM_MEMORY = 1024
 
 Vagrant.configure("2") do |config|
 
@@ -24,11 +24,34 @@ Vagrant.configure("2") do |config|
 		k3s.vm.hostname = MASTER_BOX_NAME
 		k3s.vm.network "private_network", ip: MASTER_BOX_IP
 		k3s.vm.provider "virtualbox" do |vb|
-			vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
 			vb.customize ["modifyvm", :id, "--cpus", VM_CPUS]
 			vb.customize ["modifyvm", :id, "--memory", VM_MEMORY]
 			vb.customize ["modifyvm", :id, "--name", MASTER_BOX_NAME]
 		end
 		# k3s.vm.provision "shell", inline: $script
 	end
+
+    config.vm.define "glab" do |gitlab|
+        gitlab.vm.box = "debian/buster64"
+        gitlab.vm.hostname = "glab"
+        gitlab.vm.box_url = "debian/buster64"
+        gitlab.vm.network :private_network, ip: "192.168.42.115"
+        gitlab.vm.provider :virtualbox do |v|
+			vb.customize ["modifyvm", :id, "--cpus", VM_CPUS]
+			vb.customize ["modifyvm", :id, "--memory", VM_MEMORY]
+			vb.customize ["modifyvm", :id, "--name", "glab"]
+        end
+        config.vm.provision "shell", inline: <<-SHELL
+            sed -i 's/ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/g' /etc/ssh/sshd_config
+            service ssh restart
+            # IP=$(hostname -I | awk '${print $2}')
+            # apt-get update -qq >/dev/null
+            # apt-get install -qq -y vim git wget curl git >/dev/null
+            # curl -sS https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh | sudo bash
+            # apt-get update -qq >/dev/null
+            # export LC_CTYPE=en_US.UTF-8
+            # export LC_ALL=en_US.UTF-8
+            # apt install -y gitlab-ce
+            # gitlab-ctl reconfigure
+        SHELL
 end
