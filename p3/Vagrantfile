@@ -7,7 +7,7 @@ $script = <<-SCRIPT
   sh ./scripts/script.sh
 SCRIPT
 
-MASTER_BOX_NAME = "pipeline" + "S"
+MASTER_BOX_NAME = "my-sexy-homestead-box-master"
 MASTER_BOX_IP = "192.168.42.110"
 VM_CPUS = 2
 VM_MEMORY = 2048
