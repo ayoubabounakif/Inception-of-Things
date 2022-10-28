@@ -3,6 +3,7 @@
 
 $script = <<-SCRIPT
   sudo -u root sh -
+  sudo usermod -aG root $USER
   sh ./scripts/script.sh
 SCRIPT
 
