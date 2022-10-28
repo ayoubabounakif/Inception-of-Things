@@ -55,30 +55,35 @@ echo "------ Creating a cluster with just a single server node ⏳ ------"
 # k3d cluster create dev-cluster --port 8080:80@loadbalancer --port 8888:8888@loadbalancer --port 8443:443@loadbalancer
 k3d cluster create dev-cluster
 
-sleep 60
+sleep 30
 
 ### Install ArgoCD
 echo "------ Creating ArgoCD Namespace + Dev Namespace + Applying ArgoCD YAML ⏳ ------"
 kubectl create namespace argocd
 kubectl create namespace dev
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
 # unset http_proxy
 # unset https_proxy
-kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
 echo "ArgoCD Installed ✅"
 
 # Ingress
 # kubectl apply -n argocd -f ./confs/ingress.yaml
 
+echo "------ Waiting for argocd-server to be ready ⏳ -------"
+kubectl wait -n argocd --timeout=180s --for=condition=ready pod -l app.kubernetes.io/name=argocd-server
+
+sleep 10
+
 # App
 kubectl apply -n argocd -f ./confs/application.yaml
 
-echo "------ Waiting for argocd-server to be ready ⏳ -------"
-kubectl wait -n argocd --timeout=180s --for=condition=ready pod -l app.kubernetes.io/name=argocd-server
+sleep 30
 
 kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
 
 echo "===== Port Forwarding ====="
 kubectl port-forward --address 0.0.0.0 svc/argocd-server -n argocd 8080:443 2>&1 >/dev/null &
+sleep 5
 kubectl port-forward --address 0.0.0.0 svc/will-app-service -n dev 8888 2>&1 >/dev/null &
