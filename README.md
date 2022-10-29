@@ -35,3 +35,7 @@ This project aims to introduce you to kubernetes from a developer perspective.Yo
 - kubectl wait -n argocd --timeout=180s --for=condition=ready pod -l app.kubernetes.io/name=will-app
 
 - sudo systemctl disable --now firewalld
+
+- https://gitlab.com/ayoubabounakif/inception-of-things-k3d-agent-setup #REPO
+- https://docs.gitlab.com/ee/user/clusters/agent/install/index.html#register-the-agent-with-gitlab
+- https://k3d.io/v5.3.0/usage/kubeconfig/

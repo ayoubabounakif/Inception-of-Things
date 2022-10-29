@@ -6,8 +6,10 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/ayoubabounakif/Inception-of-Things
-    targetRevision: confs
+    # repoURL: https://github.com/ayoubabounakif/Inception-of-Things
+    repoURL: https://gitlab.com/ayoubabounakif/inception-of-things-k3d-agent-setup.git
+    targetRevision: HEAD
+    # targetRevision: confs
     path: manifests
   destination:
     server: https://kubernetes.default.svc

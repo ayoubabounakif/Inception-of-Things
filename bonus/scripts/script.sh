@@ -88,3 +88,21 @@ kubectl port-forward --address 0.0.0.0 svc/argocd-server -n argocd 8080:443 2>&1
 sleep 5
 echo "===== You can now access ArgoCD Server on https://192.168.42.110:8080 ====="
 # kubectl port-forward --address 0.0.0.0 svc/will-app-service -n dev 8888 2>&1 >/dev/null &
+
+sleep 10
+
+# SETUP OF THE GITLAB CI
+# REPO: https://gitlab.com/ayoubabounakif/inception-of-things-k3d-agent-setup
+
+# Install Helm
+sudo curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+sudo chmod 700 get_helm.sh
+sudo ./get_helm.sh
+
+sleep 5
+
+sudo k3d kubeconfig get dev-cluster > cluster-kubeconfig.yaml
+export KUBECONFIG=$(realpath cluster-kubeconfig.yaml)
+
+
+
