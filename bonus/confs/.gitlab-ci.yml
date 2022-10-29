@@ -1,0 +1,10 @@
+stages:
+  - deploy
+
+deploy-dev:
+  image: docker:19.03.5
+  stage: deploy
+  environment:
+    name: dev
+  script:
+    - echo "mama papa"
