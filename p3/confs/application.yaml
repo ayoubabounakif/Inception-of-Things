@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/ayoubabounakif/Inception-of-Things
+    repoURL: https://github.com/ayoubabounakif/aabounak
     targetRevision: confs
     path: manifests
   destination:
