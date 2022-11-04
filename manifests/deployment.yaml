@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: will-app
+  namespace: dev
+  labels:
+    app: will-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: will-app
+  template:
+    metadata:
+      labels:
+        app: will-app
+    spec:
+      containers:
+        - name: playground
+          image: "wil42/playground:v2"
+          ports:
+            - containerPort: 8888
+#           resources:
+#           limits:
+#             memory: 512Mi
+#             cpu: "1"
+#           requests:
+#             memory: 256Mi
+#             cpu: "0.2"
