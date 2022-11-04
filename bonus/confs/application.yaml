@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     # repoURL: https://github.com/ayoubabounakif/Inception-of-Things
-    repoURL: https://gitlab.com/ayoubabounakif/inception-of-things-k3d-agent-setup.git
+    repoURL: https://gitlab.com/ayoubabounakif/aabounak
     targetRevision: HEAD
     # targetRevision: confs
     path: manifests

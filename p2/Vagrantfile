@@ -1,14 +1,14 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-$common = <<-SCRIPT
-  sudo -u root sh -
-  yum -y install vim container-selinux net-tools telnet sshpass python3
-  sed -i 's/ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/g' /etc/ssh/sshd_config
-  systemctl restart sshd.service
+$manifest = <<-SCRIPT
+  /usr/local/bin/kubectl apply -f ./confs/ingress.yaml
+  /usr/local/bin/kubectl apply -f ./confs/app1/.
+  /usr/local/bin/kubectl apply -f ./confs/app2/.
+  /usr/local/bin/kubectl apply -f ./confs/app3/.
 SCRIPT
 
-MASTER_BOX_NAME = "my-sexy-homestead-box-master"
+MASTER_BOX_NAME = "aabounakS"
 MASTER_BOX_IP = "192.168.42.110"
 VM_CPUS = 2
 VM_MEMORY = 2048
@@ -27,15 +27,14 @@ Vagrant.configure("2") do |config|
 		k3s.vm.network "private_network", ip: MASTER_BOX_IP
 		k3s.vm.network "forwarded_port", guest: 6443, host: 6443, host_ip: "0.0.0.0"
 		k3s.vm.provider "virtualbox" do |vb|
-			vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
 			vb.customize ["modifyvm", :id, "--cpus", VM_CPUS]
 			vb.customize ["modifyvm", :id, "--memory", VM_MEMORY]
 			vb.customize ["modifyvm", :id, "--name", MASTER_BOX_NAME]
 		end
-		k3s.vm.provision "shell", inline: $common
 		k3s.vm.provision "shell", inline: <<-SHELL
-			curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--write-kubeconfig-mode 644 server --flannel-iface=eth1" sh -
-		SHELL
+			# v1.24.7+k3s1
+    	  curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.25.2+k3s1 INSTALL_K3S_EXEC="--write-kubeconfig-mode 644 server --flannel-iface=eth1" sh -
+	    SHELL
+		k3s.vm.provision "shell", inline: $manifest
 	end
-
 end

@@ -92,7 +92,7 @@ echo "===== You can now access ArgoCD Server on https://192.168.42.110:8080 ====
 sleep 10
 
 # SETUP OF THE GITLAB CI
-# REPO: https://gitlab.com/ayoubabounakif/inception-of-things-k3d-agent-setup
+# REPO: https://gitlab.com/ayoubabounakif/aabounak
 
 # Install Helm
 sudo curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3

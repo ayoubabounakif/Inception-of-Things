@@ -8,8 +8,8 @@ $common = <<-SCRIPT
   systemctl restart sshd.service
 SCRIPT
 
-MASTER_BOX_NAME = "my-sexy-homestead-box-master"
-AGENT_BOX_NAME = "my-sexy-homestead-box-agent"
+MASTER_BOX_NAME = "aabounakS"
+AGENT_BOX_NAME = "abiariSW"
 MASTER_BOX_IP = "192.168.42.110"
 AGENT_BOX_IP = "192.168.42.111"
 VM_CPUS = 1
@@ -27,7 +27,6 @@ Vagrant.configure("2") do |config|
     k3s.vm.network "private_network", ip: MASTER_BOX_IP
     k3s.vm.network "forwarded_port", guest: 6443, host: 6443, host_ip: "0.0.0.0"
     k3s.vm.provider "virtualbox" do |vb|
-      vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
       vb.customize ["modifyvm", :id, "--cpus", VM_CPUS]
       vb.customize ["modifyvm", :id, "--memory", VM_MEMORY]
       vb.customize ["modifyvm", :id, "--name", MASTER_BOX_NAME]
@@ -42,8 +41,6 @@ Vagrant.configure("2") do |config|
     k3s.vm.hostname = AGENT_BOX_NAME
     k3s.vm.network "private_network", ip: AGENT_BOX_IP
     k3s.vm.provider "virtualbox" do |vb|
-      vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-      vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
       vb.customize ["modifyvm", :id, "--cpus", VM_CPUS]
       vb.customize ["modifyvm", :id, "--memory", VM_MEMORY]
       vb.customize ["modifyvm", :id, "--name", AGENT_BOX_NAME]
