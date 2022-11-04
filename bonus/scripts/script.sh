@@ -102,7 +102,7 @@ sudo ./get_helm.sh
 sleep 5
 
 sudo k3d kubeconfig get dev-cluster > cluster-kubeconfig.yaml
-export KUBECONFIG=$(realpath cluster-kubeconfig.yaml)
+# export KUBECONFIG=$(realpath cluster-kubeconfig.yaml)
 
 
 
