@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     # repoURL: https://github.com/ayoubabounakif/Inception-of-Things
-    repoURL: https://gitlab.com/ayoubabounakif/aabounak
+    repoURL: https://gitlab.com/ayoubabounakif/aabounak.git
     targetRevision: HEAD
     # targetRevision: confs
     path: manifests
