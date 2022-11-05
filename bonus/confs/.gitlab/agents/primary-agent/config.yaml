@@ -1,5 +1,5 @@
 gitops:
   manifest_projects:
-  - id: "ayoubabounakif/aabounak/manifests/"
+  - id: "ayoubabounakif/inception-of-things-k3d-agent-setup/manifests/"
   path:
   - glob: '/**/*.{yaml, yml, json}'
